@@ -1,9 +1,10 @@
 import ConcertDetails from "@/components/ConcertDetails";
 
 const Concert = async ({ params, searchParams }) => {
-    const id = await params.id;
-    const date = await searchParams.date;
-    const quantity = await searchParams.quantity;
+    const concertParams = await params;
+    const id = concertParams.id;
+    const date = concertParams.date;
+    const quantity = concertParams.quantity;
 
     const concert = {
         id: id,
