@@ -3,7 +3,7 @@
 
 //sending form to api
 export const formSubmit = async (formData) => {
-    const response = await fetch('https://bu0la6i3uj.execute-api.us-east-1.amazonaws.com/DeployingToTicketHubValidator', {
+    const response = await fetch('https://bu0la6i3uj.execute-api.us-east-1.amazonaws.com/tickets', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
