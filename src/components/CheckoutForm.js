@@ -64,19 +64,19 @@ const CheckoutForm = ({ concertInfo }) => {
             <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <FormInput label="Concert ID" name="ConcertId" value={formData.id || ''} readOnly />
-                <FormInput label="Quantity" name="Quantity" value={formData.quantity || ''} readOnly />
-                <FormInput label="Email" name="Email" value={formData.email} onChange={handleChange} type="email" />
-                <FormInput label="Name" name="Name" value={formData.name} onChange={handleChange} />
-                <FormInput label="Phone" name="Phone" value={formData.phone} onChange={handleChange} />
-                <FormInput label="Credit Card" name="CreditCard" value={formData.creditCard} onChange={handleChange} />
-                <FormInput label="Expiration Date (MM/YY)" name="ExpirationDate" value={formData.expirationDate} onChange={handleChange} />
-                <FormInput label="Security Code" name="SecurityCode" value={formData.securityCode} onChange={handleChange} />
-                <FormInput label="Address" name="Address" value={formData.address} onChange={handleChange} />
-                <FormInput label="City" name="City" value={formData.city} onChange={handleChange} />
-                <FormInput label="Province" name="Province" value={formData.province} onChange={handleChange} />
-                <FormInput label="Postal Code" name="PostalCode" value={formData.postalCode} onChange={handleChange} />
-                <FormInput label="Country" name="Country" value={formData.country} onChange={handleChange} />
+                <FormInput label="Concert ID" name="id" value={formData.id || ''} readOnly />
+                <FormInput label="Quantity" name="quantity" value={formData.quantity || ''} readOnly />
+                <FormInput label="Email" name="email" value={formData.email} onChange={handleChange} type="email" />
+                <FormInput label="Name" name="name" value={formData.name} onChange={handleChange} />
+                <FormInput label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
+                <FormInput label="Credit Card" name="creditCard" value={formData.creditCard} onChange={handleChange} />
+                <FormInput label="Expiration Date (MM/YY)" name="expirationDate" value={formData.expirationDate} onChange={handleChange} />
+                <FormInput label="Security Code" name="securityCode" value={formData.securityCode} onChange={handleChange} />
+                <FormInput label="Address" name="address" value={formData.address} onChange={handleChange} />
+                <FormInput label="City" name="city" value={formData.city} onChange={handleChange} />
+                <FormInput label="Province" name="province" value={formData.province} onChange={handleChange} />
+                <FormInput label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
+                <FormInput label="Country" name="country" value={formData.country} onChange={handleChange} />
             </div>
 
             <button
@@ -89,7 +89,18 @@ const CheckoutForm = ({ concertInfo }) => {
             {apiResponse && (
                 <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
                     {apiResponseStatus}
-                    {apiResponse}
+                    {/* {console.log(apiResponse)} */}
+                    {/* {apiResponse ? (
+                        // Has errors array
+                        <ul className="list-disc list-inside mt-2">
+                            {apiResponse.map((error, index) => (
+                                <li key={index}>{error}</li>
+                            ))}
+                        </ul>
+                    ) : (
+                        // Success message or single error
+                        <p>{apiResponse.message || apiResponse.error || apiResponse}</p>
+                    )} */}
                 </p>
             )}
         </form>

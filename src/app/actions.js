@@ -20,7 +20,7 @@ export const formSubmit = async (formData) => {
         return (
             {
                 status: response.status,
-                message: 'Error submitting order.'
+                message: response.body
             }
         );
     }
