@@ -88,6 +88,7 @@ const CheckoutForm = ({ concertInfo }) => {
 
             {apiResponse && (
                 <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
+                    {apiResponseStatus}
                     {apiResponse}
                 </p>
             )}
