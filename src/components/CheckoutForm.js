@@ -8,13 +8,13 @@ import { useSearchParams } from 'next/navigation';
 const CheckoutForm = ({ concertInfo }) => {
     //hold all data from the form fields
     const [formData, setFormData] = useState({
-        ConcertId: concertInfo.id, Email: '',
-        Name: '', Phone: '',
-        Quantity: concertInfo.quantity, CreditCard: '',
-        ExpirationDate: '', SecurityCode: '',
-        Address: '', City: '',
-        Province: '', PostalCode: '',
-        Country: ''
+        id: concertInfo.id, email: '',
+        name: '', phone: '',
+        quantity: concertInfo.quantity, creditCard: '',
+        expirationDate: '', securityCode: '',
+        address: '', city: '',
+        province: '', postalCode: '',
+        country: ''
     });
 
     const searchParams = useSearchParams();
@@ -24,8 +24,8 @@ const CheckoutForm = ({ concertInfo }) => {
 
         setFormData((prev) => ({
             ...prev,
-            ConcertId: id || '',
-            Quantity: quantity || '',
+            id: id || '',
+            quantity: quantity || '',
         }));
     }, [searchParams]);
 
@@ -64,19 +64,19 @@ const CheckoutForm = ({ concertInfo }) => {
             <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <FormInput label="Concert ID" name="ConcertId" value={formData.ConcertId || ''} readOnly />
-                <FormInput label="Quantity" name="Quantity" value={formData.Quantity || ''} readOnly />
-                <FormInput label="Email" name="Email" value={formData.Email} onChange={handleChange} type="email" />
-                <FormInput label="Name" name="Name" value={formData.Name} onChange={handleChange} />
-                <FormInput label="Phone" name="Phone" value={formData.Phone} onChange={handleChange} />
-                <FormInput label="Credit Card" name="CreditCard" value={formData.CreditCard} onChange={handleChange} />
-                <FormInput label="Expiration Date (MM/YY)" name="ExpirationDate" value={formData.ExpirationDate} onChange={handleChange} />
-                <FormInput label="Security Code" name="SecurityCode" value={formData.SecurityCode} onChange={handleChange} />
-                <FormInput label="Address" name="Address" value={formData.Address} onChange={handleChange} />
-                <FormInput label="City" name="City" value={formData.City} onChange={handleChange} />
-                <FormInput label="Province" name="Province" value={formData.Province} onChange={handleChange} />
-                <FormInput label="Postal Code" name="PostalCode" value={formData.PostalCode} onChange={handleChange} />
-                <FormInput label="Country" name="Country" value={formData.Country} onChange={handleChange} />
+                <FormInput label="Concert ID" name="ConcertId" value={formData.id || ''} readOnly />
+                <FormInput label="Quantity" name="Quantity" value={formData.quantity || ''} readOnly />
+                <FormInput label="Email" name="Email" value={formData.email} onChange={handleChange} type="email" />
+                <FormInput label="Name" name="Name" value={formData.name} onChange={handleChange} />
+                <FormInput label="Phone" name="Phone" value={formData.phone} onChange={handleChange} />
+                <FormInput label="Credit Card" name="CreditCard" value={formData.creditCard} onChange={handleChange} />
+                <FormInput label="Expiration Date (MM/YY)" name="ExpirationDate" value={formData.expirationDate} onChange={handleChange} />
+                <FormInput label="Security Code" name="SecurityCode" value={formData.securityCode} onChange={handleChange} />
+                <FormInput label="Address" name="Address" value={formData.address} onChange={handleChange} />
+                <FormInput label="City" name="City" value={formData.city} onChange={handleChange} />
+                <FormInput label="Province" name="Province" value={formData.province} onChange={handleChange} />
+                <FormInput label="Postal Code" name="PostalCode" value={formData.postalCode} onChange={handleChange} />
+                <FormInput label="Country" name="Country" value={formData.country} onChange={handleChange} />
             </div>
 
             <button
