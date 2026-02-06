@@ -11,6 +11,8 @@ export const formSubmit = async (formData) => {
         body: JSON.stringify(formData)
     });
 
+    const data = await response.json();
+
     if (response.ok) {
         return ({
             status: response.status,
@@ -20,7 +22,7 @@ export const formSubmit = async (formData) => {
         return (
             {
                 status: response.status,
-                message: response.body
+                message: data
             }
         );
     }

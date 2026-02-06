@@ -89,18 +89,7 @@ const CheckoutForm = ({ concertInfo }) => {
             {apiResponse && (
                 <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
                     {apiResponseStatus}
-                    {/* {console.log(apiResponse)} */}
-                    {/* {apiResponse ? (
-                        // Has errors array
-                        <ul className="list-disc list-inside mt-2">
-                            {apiResponse.map((error, index) => (
-                                <li key={index}>{error}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        // Success message or single error
-                        <p>{apiResponse.message || apiResponse.error || apiResponse}</p>
-                    )} */}
+                    {console.log(apiResponse.errors)}
                 </p>
             )}
         </form>
