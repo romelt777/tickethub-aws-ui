@@ -87,10 +87,17 @@ const CheckoutForm = ({ concertInfo }) => {
             </button>
 
             {apiResponse && (
-                <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
-                    {apiResponseStatus}
-                    {console.log(apiResponse.errors)}
-                </p>
+                <div>
+                    <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
+                        {apiResponseStatus}
+                    </p>
+                    <ul className="font-medium text-red-600">
+                        {apiResponse.errors.map((error) => (
+                            <li key={error}>{error}</li>
+                        ))}
+
+                    </ul>
+                </div>
             )}
         </form>
     )
