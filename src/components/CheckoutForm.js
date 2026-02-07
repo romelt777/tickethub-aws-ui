@@ -56,6 +56,9 @@ const CheckoutForm = ({ concertInfo }) => {
 
     };
 
+    //holds the errors, to then change UI.
+
+
     return (
         <form
             onSubmit={handleSubmit}
@@ -91,12 +94,16 @@ const CheckoutForm = ({ concertInfo }) => {
                     <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
                         {apiResponseStatus}
                     </p>
-                    <ul className="font-medium text-red-600">
-                        {apiResponse.errors.map((error) => (
-                            <li key={error}>{error}</li>
-                        ))}
+                    {apiResponseStatus === 200 ?
+                        <p className="font-medium text-green-600">{apiResponse}</p> :
+                        <ul className="font-medium text-red-600">
+                            {apiResponse.errors.map((error) => (
+                                <li key={error}>{error}</li>
+                            ))}
 
-                    </ul>
+                        </ul>
+                    }
+
                 </div>
             )}
         </form>
