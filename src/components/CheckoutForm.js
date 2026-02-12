@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { formSubmit } from '@/app/actions';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 
 const CheckoutForm = ({ concertInfo }) => {
+    //router for redirecting
+    const router = useRouter();
+
     //hold all data from the form fields
     const [formData, setFormData] = useState({
         id: concertInfo.id, email: '',
@@ -80,6 +83,12 @@ const CheckoutForm = ({ concertInfo }) => {
                 province: '', postalCode: '',
                 country: ''
             })
+
+            const timer = setTimeout(() => {
+                router.push("/");
+            }, 3000);
+
+            return () => clearTimeout(timer);
         }
 
     };
