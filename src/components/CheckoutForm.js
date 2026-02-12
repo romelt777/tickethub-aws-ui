@@ -70,7 +70,7 @@ const CheckoutForm = ({ concertInfo }) => {
         }
 
         //clearing form
-        if (response.status) {
+        if (response.status === 200) {
             setFormData({
                 id: concertInfo.id, email: '',
                 name: '', phone: '',
@@ -148,7 +148,7 @@ const FormInput = ({ label, name, value, onChange, error, readOnly = false, type
             value={value}
             onChange={onChange}
             readOnly={readOnly}
-            className={`${error?.toLowerCase().includes(label.toLowerCase()) ? 'border-4 border-red-600' : 'border border-gray-300 '} rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+            className={`${error?.toString().toLowerCase().includes(label.toLowerCase()) ? 'border-4 border-red-600' : 'border border-gray-300 '} rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
             required
         />
     </div>
