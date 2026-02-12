@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const Concerts = () => {
     const concerts = [
-        { id: '1', date: '2025-05-01' },
-        { id: '2', date: '2025-06-10' },
-        { id: '3', date: '2025-07-20' },
+        { id: '1', date: '2026-04-01' },
+        { id: '2', date: '2026-05-10' },
+        { id: '3', date: '2026-07-20' },
     ];
 
     return (
