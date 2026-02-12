@@ -52,6 +52,9 @@ const CheckoutForm = ({ concertInfo }) => {
         //stops form from reloading page.
         e.preventDefault();
 
+        //reset errors
+        setFullError({});
+
         //send formdata to formsubmit, function from actionJS
         const response = await formSubmit(formData);
         //setting the response to state, will display on webpage
@@ -64,6 +67,19 @@ const CheckoutForm = ({ concertInfo }) => {
             });
             console.log(fullError);
             setFullError(fullError);
+        }
+
+        //clearing form
+        if (response.status) {
+            setFormData({
+                id: concertInfo.id, email: '',
+                name: '', phone: '',
+                quantity: concertInfo.quantity, creditCard: '',
+                expirationDate: '', securityCode: '',
+                address: '', city: '',
+                province: '', postalCode: '',
+                country: ''
+            })
         }
 
     };
