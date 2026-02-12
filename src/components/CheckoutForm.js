@@ -103,9 +103,6 @@ const CheckoutForm = ({ concertInfo }) => {
 
             {apiResponse && (
                 <div>
-                    <p className={`font-medium ${apiResponseStatus === 200 ? 'text-green-600' : 'text-red-600'}`}>
-                        {apiResponseStatus}
-                    </p>
                     {apiResponseStatus === 200 ?
                         <p className="font-medium text-green-600">{apiResponse}</p> :
                         <ul className="font-medium text-red-600">
