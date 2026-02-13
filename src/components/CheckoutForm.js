@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { formSubmit } from '@/app/actions';
 import { useSearchParams, useRouter } from 'next/navigation';
 
+//creating context for errors
+const ErrorContext = createContext({});
 
 const CheckoutForm = ({ concertInfo }) => {
     //router for redirecting
@@ -39,8 +41,7 @@ const CheckoutForm = ({ concertInfo }) => {
 
 
     //holds the errors, to then change UI.
-    const [fullError, setFullError] = useState(null);
-    const [errors, setErrors] = useState({});
+    const [fullError, setFullError] = useState({});
 
 
     //when form changes, the values are saved to the state.
@@ -109,19 +110,23 @@ const CheckoutForm = ({ concertInfo }) => {
             <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <FormInput label="Concert ID" name="id" error={fullError} value={formData.id || ''} readOnly />
-                <FormInput label="Quantity" name="quantity" error={fullError} value={formData.quantity || ''} readOnly />
-                <FormInput label="Email" name="email" error={fullError} value={formData.email} onChange={handleChange} type="email" />
-                <FormInput label="Name" name="name" error={fullError} value={formData.name} onChange={handleChange} />
-                <FormInput label="Phone" name="phone" error={fullError} value={formData.phone} onChange={handleChange} />
-                <FormInput label="Credit Card" name="creditCard" error={fullError} value={formData.creditCard} onChange={handleChange} />
-                <FormInput label="Expiration Date (MM/YY)" error={fullError} name="expirationDate" value={formData.expirationDate} onChange={handleChange} />
-                <FormInput label="Security Code" name="securityCode" error={fullError} value={formData.securityCode} onChange={handleChange} />
-                <FormInput label="Address" name="address" error={fullError} value={formData.address} onChange={handleChange} />
-                <FormInput label="City" name="city" error={fullError} value={formData.city} onChange={handleChange} />
-                <FormInput label="Province" name="province" error={fullError} value={formData.province} onChange={handleChange} />
-                <FormInput label="Postal Code" name="postalCode" error={fullError} value={formData.postalCode} onChange={handleChange} />
-                <FormInput label="Country" name="country" error={fullError} value={formData.country} onChange={handleChange} />
+                <ErrorContext.Provider value={fullError}>
+                    <FormInput label="Concert ID" name="id" value={formData.id || ''} readOnly />
+                    <FormInput label="Quantity" name="quantity" value={formData.quantity || ''} readOnly />
+                    <FormInput label="Email" name="email" value={formData.email} onChange={handleChange} type="email" />
+                    <FormInput label="Name" name="name" value={formData.name} onChange={handleChange} />
+                    <FormInput label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
+                    <FormInput label="Credit Card" name="creditCard" value={formData.creditCard} onChange={handleChange} />
+                    <FormInput label="Expiration Date (MM/YY)" name="expirationDate" value={formData.expirationDate} onChange={handleChange} />
+                    <FormInput label="Security Code" name="securityCode" value={formData.securityCode} onChange={handleChange} />
+                    <FormInput label="Address" name="address" value={formData.address} onChange={handleChange} />
+                    <FormInput label="City" name="city" value={formData.city} onChange={handleChange} />
+                    <FormInput label="Province" name="province" value={formData.province} onChange={handleChange} />
+                    <FormInput label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
+                    <FormInput label="Country" name="country" value={formData.country} onChange={handleChange} />
+
+                </ErrorContext.Provider>
+
             </div>
 
             <button
@@ -151,22 +156,29 @@ const CheckoutForm = ({ concertInfo }) => {
     )
 }
 
-const FormInput = ({ label, name, value, onChange, error, readOnly = false, type = 'text' }) => (
-    <div className="flex flex-col">
-        <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
-            {label}
-        </label>
-        <input
-            id={name}
-            name={name}
-            type={type}
-            value={value}
-            onChange={onChange}
-            readOnly={readOnly}
-            className={`${error?.toString().toLowerCase().includes(label.toLowerCase()) ? 'border-4 border-red-600' : 'border border-gray-300 '} rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
-            required
-        />
-    </div>
-)
+const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'text' }) => {
+    const error = useContext(ErrorContext);
+    const hasError = error && error[name];
+
+    return (
+        <div className="flex flex-col">
+            <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
+                {label}
+            </label>
+            <input
+                id={name}
+                name={name}
+                type={type}
+                value={value}
+                onChange={onChange}
+                readOnly={readOnly}
+                className={`${hasError ? 'border-4 border-red-600' : 'border border-gray-300 '} rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+                required
+            />
+        </div>
+    )
+}
+
+
 
 export default CheckoutForm;
