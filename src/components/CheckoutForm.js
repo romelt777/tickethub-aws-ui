@@ -46,13 +46,11 @@ const CheckoutForm = ({ concertInfo }) => {
 
     //when form changes, the values are saved to the state.
     const handleChange = (e) => {
-        console.log(e);
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
-        console.log(formData)
     };
 
     const handleSubmit = async (e) => {
@@ -178,14 +176,12 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
 
         //combine both and send back to parent 
         //build the target for handleOnChange
-        console.log("hello");
         onChange({
             target: {
                 name: "expirationDate",
                 value: `${newMonth}/${newYear}`
             }
         });
-        console.log("hi");
     }
 
     return (
