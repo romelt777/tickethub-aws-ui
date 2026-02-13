@@ -40,6 +40,7 @@ const CheckoutForm = ({ concertInfo }) => {
 
     //holds the errors, to then change UI.
     const [fullError, setFullError] = useState(null);
+    const [errors, setErrors] = useState({});
 
 
     //when form changes, the values are saved to the state.
@@ -64,12 +65,16 @@ const CheckoutForm = ({ concertInfo }) => {
         setApiResponseStatus(response.status);
         setApiResponse(response.message);
         if (response.message.errors) {
+            console.log(response.message.errors);
             let fullError = "";
             response.message.errors.forEach(error => {
                 fullError += error;
             });
-            console.log(fullError);
-            setFullError(fullError);
+            // console.log(fullError);
+
+            const errorMap = Object.assign({}, ...response.message.errors);
+            console.log(errorMap);
+            setFullError(errorMap);
         }
 
         //clearing form
@@ -131,10 +136,12 @@ const CheckoutForm = ({ concertInfo }) => {
                     {apiResponseStatus === 200 ?
                         <p className="font-medium text-green-600">{apiResponse}</p> :
                         <ul className="font-medium text-red-600">
-                            {apiResponse.errors.map((error) => (
-                                <li key={error}>{error}</li>
-                            ))}
-
+                            {apiResponse.errors.map((error, i) => (
+                                Object.entries(error).map(([key, value]) => (
+                                    <li key={`${i}-${key}`}>{value}</li>
+                                ))
+                            )
+                            )}
                         </ul>
                     }
 
@@ -149,7 +156,6 @@ const FormInput = ({ label, name, value, onChange, error, readOnly = false, type
         <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
             {label}
         </label>
-        {error && console.log(error + " " + label)}
         <input
             id={name}
             name={name}
