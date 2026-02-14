@@ -43,6 +43,9 @@ const CheckoutForm = ({ concertInfo }) => {
     //holds the errors, to then change UI.
     const [fullError, setFullError] = useState({});
 
+    //holds loading state
+    const [loading, setLoading] = useState(false);
+
 
     //when form changes, the values are saved to the state.
     const handleChange = (e) => {
@@ -59,6 +62,8 @@ const CheckoutForm = ({ concertInfo }) => {
 
         //reset errors
         setFullError({});
+
+        setLoading(true);
 
         //send formdata to formsubmit, function from actionJS
         const response = await formSubmit(formData);
@@ -97,6 +102,8 @@ const CheckoutForm = ({ concertInfo }) => {
             return () => clearTimeout(timer);
         }
 
+        setLoading(false);
+
     };
 
 
@@ -129,12 +136,19 @@ const CheckoutForm = ({ concertInfo }) => {
 
             </div>
 
-            <button
-                type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition"
-            >
-                Submit Order
-            </button>
+            {loading ? (
+                <div className="flex items-center justify-center">
+                    <span className="inline-block animate-spin">◐</span>
+                </div>
+            ) : (
+                <button
+                    type="submit"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition"
+                >
+                    Submit Order
+                </button>
+            )}
+
 
             {apiResponse && (
                 <div>
