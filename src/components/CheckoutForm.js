@@ -3,6 +3,7 @@
 import { useEffect, useState, createContext, useContext } from 'react';
 import { formSubmit } from '@/app/actions';
 import { useSearchParams, useRouter } from 'next/navigation';
+import DotsLoader from './DotsLoader';
 
 //creating context for errors
 const ErrorContext = createContext({});
@@ -46,6 +47,9 @@ const CheckoutForm = ({ concertInfo }) => {
     //holds loading state
     const [loading, setLoading] = useState(false);
 
+    //holds redirect state
+    const [redirect, setRedirect] = useState(false);
+
 
     //when form changes, the values are saved to the state.
     const handleChange = (e) => {
@@ -85,6 +89,9 @@ const CheckoutForm = ({ concertInfo }) => {
 
         //clearing form
         if (response.status === 200) {
+            setLoading(false);
+            setRedirect(true);
+
             setFormData({
                 id: concertInfo.id, email: '',
                 name: '', phone: '',
@@ -153,7 +160,7 @@ const CheckoutForm = ({ concertInfo }) => {
             {apiResponse && (
                 <div>
                     {apiResponseStatus === 200 ?
-                        <p className="font-medium text-green-600">{apiResponse}</p> :
+                        <div className="font-medium text-green-600">{apiResponse} Redirecting to Home  <DotsLoader /></div> :
                         <ul className="font-medium text-red-600">
                             {apiResponse.errors.map((error, i) => (
                                 Object.entries(error).map(([key, value]) => (
