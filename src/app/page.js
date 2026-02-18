@@ -4,8 +4,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-6">
-      {/* thin blue top bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-blue-500" />
 
       <div className="text-center max-w-md">
         {/* icon mark */}

@@ -15,9 +15,6 @@ const Concerts = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 px-6 py-16">
-            {/* thin blue top bar */}
-            <div className="fixed top-0 left-0 right-0 h-1 bg-blue-500 z-10" />
-
             <div className="max-w-3xl mx-auto">
                 {/* header */}
                 <div className="mb-10">

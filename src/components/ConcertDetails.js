@@ -18,9 +18,6 @@ const ConcertDetails = ({ concert }) => {
 
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6 py-16">
-            {/* thin blue top bar */}
-            <div className="fixed top-0 left-0 right-0 h-1 bg-blue-500 z-10" />
-
             <div className="bg-white border border-slate-200 rounded-2xl shadow-sm w-full max-w-md overflow-hidden">
                 {/* card header strip */}
                 <div className="bg-blue-500 px-6 py-5">
