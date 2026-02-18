@@ -71,8 +71,6 @@ const ConcertDetails = ({ concert }) => {
                             <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
                     </Link>
-
-                    <p className="text-center text-slate-400 text-xs">No hidden fees · Instant confirmation</p>
                 </div>
             </div>
         </div>

@@ -117,63 +117,72 @@ const CheckoutForm = ({ concertInfo }) => {
 
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="bg-white max-w-2xl mx-auto p-8 rounded-xl shadow-md space-y-6"
-        >
-            <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
+        <div className="min-h-screen bg-slate-50 flex items-start justify-center px-4 py-12">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <ErrorContext.Provider value={fullError}>
-                    <FormInput label="Concert ID" name="id" value={formData.id || ''} readOnly />
-                    <FormInput label="Quantity" name="quantity" value={formData.quantity || ''} readOnly />
-                    <FormInput label="Email" name="email" value={formData.email} onChange={handleChange} type="email" />
-                    <FormInput label="Name" name="name" value={formData.name} onChange={handleChange} />
-                    <FormInput label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
-                    <FormInput label="Credit Card" name="creditCard" value={formData.creditCard} onChange={handleChange} />
-                    <FormInput label="Expiration Date (MM/YY)" name="expirationDate" value={formData.expirationDate} onChange={handleChange} />
-                    <FormInput label="Security Code" name="securityCode" value={formData.securityCode} onChange={handleChange} />
-                    <FormInput label="Address" name="address" value={formData.address} onChange={handleChange} />
-                    <FormInput label="City" name="city" value={formData.city} onChange={handleChange} />
-                    <FormInput label="Province" name="province" value={formData.province} onChange={handleChange} />
-                    <FormInput label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
-                    <FormInput label="Country" name="country" value={formData.country} onChange={handleChange} />
-
-                </ErrorContext.Provider>
-
-            </div>
-
-            {loading ? (
-                <div className="flex items-center justify-center">
-                    <span className="inline-block animate-spin">◐</span>
+            <form
+                onSubmit={handleSubmit}
+                className="bg-white w-full max-w-2xl rounded-2xl shadow-sm border border-slate-200 overflow-hidden"
+            >
+                {/* header strip */}
+                <div className="bg-blue-500 px-8 py-6">
+                    <h2 className="text-2xl font-bold text-white">Checkout</h2>
                 </div>
-            ) : (
-                <button
-                    type="submit"
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition"
-                >
-                    Submit Order
-                </button>
-            )}
 
+                <div className="p-8 space-y-4">
+                    <ErrorContext.Provider value={fullError}>
+                        <FormInput label="Concert ID" name="id" value={formData.id || ''} readOnly />
+                        <FormInput label="Quantity" name="quantity" value={formData.quantity || ''} readOnly />
+                        <FormInput label="Email" name="email" value={formData.email} onChange={handleChange} type="email" />
+                        <FormInput label="Name" name="name" value={formData.name} onChange={handleChange} />
+                        <FormInput label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
+                        <FormInput label="Credit Card" name="creditCard" value={formData.creditCard} onChange={handleChange} />
+                        <FormInput label="Expiration Date (MM/YY)" name="expirationDate" value={formData.expirationDate} onChange={handleChange} />
+                        <FormInput label="Security Code" name="securityCode" value={formData.securityCode} onChange={handleChange} />
+                        <FormInput label="Address" name="address" value={formData.address} onChange={handleChange} />
+                        <FormInput label="City" name="city" value={formData.city} onChange={handleChange} />
+                        <FormInput label="Province" name="province" value={formData.province} onChange={handleChange} />
+                        <FormInput label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
+                        <FormInput label="Country" name="country" value={formData.country} onChange={handleChange} />
 
-            {apiResponse && (
-                <div>
-                    {apiResponseStatus === 200 ?
-                        <div className="font-medium text-green-600">{apiResponse} Redirecting to Home  <DotsLoader /></div> :
-                        <ul className="font-medium text-red-600">
-                            {apiResponse.errors.map((error, i) => (
-                                Object.entries(error).map(([key, value]) => (
-                                    <li key={`${i}-${key}`}>{value}</li>
-                                ))
-                            )
-                            )}
-                        </ul>
-                    }
+                    </ErrorContext.Provider>
 
                 </div>
-            )}
-        </form>
+
+                {loading ? (
+                    <div className="flex items-center justify-center py-2">
+                        <div className="w-6 h-6 border-2 border-slate-200 border-t-blue-500 rounded-full animate-spin" />
+                    </div>
+                ) : (
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-500 hover:bg-blue-600 transition-colors text-white font-semibold py-3 px-4 rounded-xl"
+                    >
+                        Submit Order
+                    </button>
+                )}
+
+
+                {apiResponse && (
+                    <div>
+                        {apiResponseStatus === 200 ?
+                            <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-4 py-3 text-sm font-medium">
+                                {apiResponse} Redirecting to Home <DotsLoader />
+                            </div> :
+                            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                                <ul className="text-red-500 text-sm space-y-1">
+                                    {apiResponse.errors.map((error, i) => (
+                                        Object.entries(error).map(([key, value]) => (
+                                            <li key={`${i}-${key}`}>{value}</li>
+                                        ))
+                                    ))}
+                                </ul>
+                            </div>
+                        }
+
+                    </div>
+                )}
+            </form>
+        </div>
     )
 }
 
@@ -206,8 +215,8 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
     }
 
     return (
-        <div className="flex flex-col">
-            <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
+        <div className="flex flex-col gap-1.5">
+            <label htmlFor={name} className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {label}
             </label>
             {name === "expirationDate" ?
@@ -218,7 +227,7 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
                         required
                         value={month || ""}
                         onChange={handleSelectChange}
-                        className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
                     >
                         <option value="" disabled>MM</option>
                         <option value="01">01 - Jan</option>
@@ -240,7 +249,7 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
                         required
                         value={year || ""}
                         onChange={handleSelectChange}
-                        className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
                     >
                         <option value="" disabled>YY</option>
                         <option value="26">2026</option>
@@ -262,7 +271,7 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
                     value={value}
                     onChange={onChange}
                     readOnly={readOnly}
-                    className={`${hasError ? 'border-4 border-red-600' : 'border border-gray-300 '} rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+                    className={`${hasError ? 'border-4 border-red-600' : 'border border-gray-300 '} w-full rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
                     required
                 />}
 
