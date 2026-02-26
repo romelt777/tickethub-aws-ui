@@ -4,6 +4,7 @@ import { useEffect, useState, createContext, useContext } from 'react';
 import { formSubmit } from '@/app/actions';
 import { useSearchParams, useRouter } from 'next/navigation';
 import DotsLoader from './DotsLoader';
+import FormInput from './FormInput';
 
 //creating context for errors
 const ErrorContext = createContext({});
@@ -132,17 +133,17 @@ const CheckoutForm = ({ concertInfo }) => {
                     <ErrorContext.Provider value={fullError}>
                         <FormInput label="Concert ID" name="id" value={formData.id || ''} readOnly />
                         <FormInput label="Quantity" name="quantity" value={formData.quantity || ''} readOnly />
-                        <FormInput label="Email" name="email" value={formData.email} onChange={handleChange} type="email" />
-                        <FormInput label="Name" name="name" value={formData.name} onChange={handleChange} />
-                        <FormInput label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
-                        <FormInput label="Credit Card" name="creditCard" value={formData.creditCard} onChange={handleChange} />
-                        <FormInput label="Expiration Date (MM/YY)" name="expirationDate" value={formData.expirationDate} onChange={handleChange} />
-                        <FormInput label="Security Code" name="securityCode" value={formData.securityCode} onChange={handleChange} />
-                        <FormInput label="Address" name="address" value={formData.address} onChange={handleChange} />
-                        <FormInput label="City" name="city" value={formData.city} onChange={handleChange} />
-                        <FormInput label="Province" name="province" value={formData.province} onChange={handleChange} />
-                        <FormInput label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
-                        <FormInput label="Country" name="country" value={formData.country} onChange={handleChange} />
+                        <FormInput label="Email" name="email" value={formData.email} onChange={handleChange} type="email" error={fullError} />
+                        <FormInput label="Name" name="name" value={formData.name} onChange={handleChange} error={fullError} />
+                        <FormInput label="Phone" name="phone" value={formData.phone} onChange={handleChange} error={fullError} />
+                        <FormInput label="Credit Card" name="creditCard" value={formData.creditCard} onChange={handleChange} error={fullError} />
+                        <FormInput label="Expiration Date (MM/YY)" name="expirationDate" value={formData.expirationDate} onChange={handleChange} error={fullError} />
+                        <FormInput label="Security Code" name="securityCode" value={formData.securityCode} onChange={handleChange} error={fullError} />
+                        <FormInput label="Address" name="address" value={formData.address} onChange={handleChange} error={fullError} />
+                        <FormInput label="City" name="city" value={formData.city} onChange={handleChange} error={fullError} />
+                        <FormInput label="Province" name="province" value={formData.province} onChange={handleChange} error={fullError} />
+                        <FormInput label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} error={fullError} />
+                        <FormInput label="Country" name="country" value={formData.country} onChange={handleChange} error={fullError} />
 
                     </ErrorContext.Provider>
 
@@ -185,100 +186,6 @@ const CheckoutForm = ({ concertInfo }) => {
         </div>
     )
 }
-
-const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'text' }) => {
-    const error = useContext(ErrorContext);
-    const hasError = error && error[name];
-
-    //Expiration Date:
-    //splitting exp date into 2 values
-    const [month, year] = (value || '').split('/');
-    // console.log("MOnth " + month + "year " + year);
-
-    //handle the expiration Date changing dropdown
-    const handleSelectChange = (e) => {
-        //putting the name, and value assigning it to incoming target.
-        const { name: selectName, value: selectValue } = e.target;
-
-        //new month and year
-        const newMonth = selectName === "month" ? selectValue : (month || '');
-        const newYear = selectName === "year" ? selectValue : (year || '');
-
-        //combine both and send back to parent 
-        //build the target for handleOnChange
-        onChange({
-            target: {
-                name: "expirationDate",
-                value: `${newMonth}/${newYear}`
-            }
-        });
-    }
-
-    return (
-        <div className="flex flex-col gap-1.5">
-            <label htmlFor={name} className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                {label}
-            </label>
-            {name === "expirationDate" ?
-                <div className="flex gap-2">
-                    <select
-                        name="month"
-                        autoComplete="cc-exp-month"
-                        required
-                        value={month || ""}
-                        onChange={handleSelectChange}
-                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
-                    >
-                        <option value="" disabled>MM</option>
-                        <option value="01">01 - Jan</option>
-                        <option value="02">02 - Feb</option>
-                        <option value="03">03 - Mar</option>
-                        <option value="04">04 - Apr</option>
-                        <option value="05">05 - May</option>
-                        <option value="06">06 - Jun</option>
-                        <option value="07">07 - Jul</option>
-                        <option value="08">08 - Aug</option>
-                        <option value="09">09 - Sep</option>
-                        <option value="10">10 - Oct</option>
-                        <option value="11">11 - Nov</option>
-                        <option value="12">12 - Dec</option>
-                    </select>
-                    <select
-                        name="year"
-                        autoComplete="cc-exp-year"
-                        required
-                        value={year || ""}
-                        onChange={handleSelectChange}
-                        className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
-                    >
-                        <option value="" disabled>YY</option>
-                        <option value="26">2026</option>
-                        <option value="27">2027</option>
-                        <option value="28">2028</option>
-                        <option value="29">2029</option>
-                        <option value="30">2030</option>
-                        <option value="31">2031</option>
-                        <option value="32">2032</option>
-                        <option value="33">2033</option>
-                        <option value="34">2034</option>
-                        <option value="35">2035</option>
-                    </select>
-                </div>
-                : <input
-                    id={name}
-                    name={name}
-                    type={type}
-                    value={value}
-                    onChange={onChange}
-                    readOnly={readOnly}
-                    className={`${hasError ? 'border-4 border-red-600' : 'border border-gray-300 '} w-full rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-300 ${readOnly ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
-                    required
-                />}
-
-        </div>
-    )
-}
-
 
 
 export default CheckoutForm;
