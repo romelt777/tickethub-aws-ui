@@ -3,9 +3,7 @@
 
 //sending form to api
 export const formSubmit = async (formData) => {
-    //sam: https://xaikjjwhlh.execute-api.us-east-1.amazonaws.com/Prod/ticket
-    //normal: https://bu0la6i3uj.execute-api.us-east-1.amazonaws.com/tickets
-    const response = await fetch('https://xaikjjwhlh.execute-api.us-east-1.amazonaws.com/Prod/ticket', {
+    const response = await fetch(process.env.URL_SAM, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
