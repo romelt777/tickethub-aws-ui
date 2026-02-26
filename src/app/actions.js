@@ -3,7 +3,9 @@
 
 //sending form to api
 export const formSubmit = async (formData) => {
-    const response = await fetch('https://bu0la6i3uj.execute-api.us-east-1.amazonaws.com/tickets', {
+    //sam: https://xaikjjwhlh.execute-api.us-east-1.amazonaws.com/Prod/ticket
+    //normal: https://bu0la6i3uj.execute-api.us-east-1.amazonaws.com/tickets
+    const response = await fetch('https://xaikjjwhlh.execute-api.us-east-1.amazonaws.com/Prod/ticket', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
