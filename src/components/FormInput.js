@@ -1,10 +1,50 @@
+import { useMemo } from "react";
+
 const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'text', error }) => {
     const hasError = error && error[name];
 
     //Expiration Date:
     //splitting exp date into 2 values
     const [month, year] = (value || '').split('/');
-    // console.log("MOnth " + month + "year " + year);
+
+    //get current month and year
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1; //1-12
+    const currentYear = now.getFullYear() % 100;  //%100 to get last to digits
+
+    //function to generate available years automatically
+    const availableYears = useMemo(() => {
+        const years = [];
+        for (let y = currentYear; y <= currentYear + 10; y++) {
+            years.push(String(y));
+        }
+        return years;
+    }, [currentYear]); //only recalculates when currentYear changes
+
+    //generate months based on the year
+    const availableMonths = useMemo(() => {
+        const months = [
+            { value: '01', label: '01 - Jan' },
+            { value: '02', label: '02 - Feb' },
+            { value: '03', label: '03 - Mar' },
+            { value: '04', label: '04 - Apr' },
+            { value: '05', label: '05 - May' },
+            { value: '06', label: '06 - Jun' },
+            { value: '07', label: '07 - Jul' },
+            { value: '08', label: '08 - Aug' },
+            { value: '09', label: '09 - Sep' },
+            { value: '10', label: '10 - Oct' },
+            { value: '11', label: '11 - Nov' },
+            { value: '12', label: '12 - Dec' },
+        ];
+
+        if (year && parseInt(year) === currentYear) {
+            return months.filter(m => parseInt(m.value) > currentMonth);
+        }
+        else {
+            return months;
+        }
+    }, [year, currentMonth, currentYear]);
 
     //handle the expiration Date changing dropdown
     const handleSelectChange = (e) => {
@@ -12,8 +52,15 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
         const { name: selectName, value: selectValue } = e.target;
 
         //new month and year
-        const newMonth = selectName === "month" ? selectValue : (month || '');
-        const newYear = selectName === "year" ? selectValue : (year || '');
+        let newMonth = selectName === "month" ? selectValue : (month || '');
+        let newYear = selectName === "year" ? selectValue : (year || '');
+
+        //reset the month if its in the past
+        if (selectName === "year" && parseInt(selectValue) === currentYear) {
+            if (newMonth && parseInt(newMonth) <= currentMonth) {
+                newMonth = "";
+            }
+        }
 
         //combine both and send back to parent 
         //build the target for handleOnChange
@@ -41,18 +88,11 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
                         className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
                     >
                         <option value="" disabled>MM</option>
-                        <option value="01">01 - Jan</option>
-                        <option value="02">02 - Feb</option>
-                        <option value="03">03 - Mar</option>
-                        <option value="04">04 - Apr</option>
-                        <option value="05">05 - May</option>
-                        <option value="06">06 - Jun</option>
-                        <option value="07">07 - Jul</option>
-                        <option value="08">08 - Aug</option>
-                        <option value="09">09 - Sep</option>
-                        <option value="10">10 - Oct</option>
-                        <option value="11">11 - Nov</option>
-                        <option value="12">12 - Dec</option>
+                        {availableMonths.map((m) => (
+                            <option key={m.value} value={m.value}>
+                                {m.label}
+                            </option>
+                        ))}
                     </select>
                     <select
                         name="year"
@@ -63,16 +103,11 @@ const FormInput = ({ label, name, value, onChange, readOnly = false, type = 'tex
                         className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition"
                     >
                         <option value="" disabled>YY</option>
-                        <option value="26">2026</option>
-                        <option value="27">2027</option>
-                        <option value="28">2028</option>
-                        <option value="29">2029</option>
-                        <option value="30">2030</option>
-                        <option value="31">2031</option>
-                        <option value="32">2032</option>
-                        <option value="33">2033</option>
-                        <option value="34">2034</option>
-                        <option value="35">2035</option>
+                        {availableYears.map((y) => (
+                            <option key={y} value={y}>
+                                20{y}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 : <input
